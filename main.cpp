@@ -21,6 +21,9 @@ int main()
 
     cargarPiezas(piezas);
 
+    cout << "\nTABLERO INICIAL\n";
+    dibujarTablero(tablero, tipotablero, &alto, &ancho);
+
     cout << "\nPieza de prueba:\n";
     mostrarPieza(piezas[2]);
 

@@ -55,7 +55,20 @@ int main()
         case LONG64:
             break;
         }
+   }
+
+    // Intentar colocar pieza
+    if(puedeColocarPieza(tablero, tipotablero, piezas[2], 2, 3, alto, ancho))
+    {
+        colocarPieza(tablero, tipotablero, piezas[2], 2, 3, alto, ancho);
     }
+    else
+    {
+        cout << "No se puede colocar la pieza\n";
+    }
+
+    cout << "\nTABLERO CON PIEZA\n";
+    dibujarTablero(tablero, tipotablero, &alto, &ancho);
 
     return 0;
 }

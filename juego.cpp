@@ -63,3 +63,81 @@ void inicializarTableroEnceros(void *& tablero, TipoTablero&  tipotablero, const
 
 
 }
+
+void cargarPiezas(Pieza piezas[7]){
+
+    char I[4][4] = {
+        {0,0,0,0},
+        {1,1,1,1},
+        {0,0,0,0},
+        {0,0,0,0}
+    };
+
+    char O[4][4] = {
+        {0,1,1,0},
+        {0,1,1,0},
+        {0,0,0,0},
+        {0,0,0,0}
+    };
+
+    char T[4][4] = {
+        {0,1,0,0},
+        {1,1,1,0},
+        {0,0,0,0},
+        {0,0,0,0}
+    };
+
+    char S[4][4] = {
+        {0,1,1,0},
+        {1,1,0,0},
+        {0,0,0,0},
+        {0,0,0,0}
+    };
+
+    char Z[4][4] = {
+        {1,1,0,0},
+        {0,1,1,0},
+        {0,0,0,0},
+        {0,0,0,0}
+    };
+
+    char J[4][4] = {
+        {1,0,0,0},
+        {1,1,1,0},
+        {0,0,0,0},
+        {0,0,0,0}
+    };
+
+    char L[4][4] = {
+        {0,0,1,0},
+        {1,1,1,0},
+        {0,0,0,0},
+        {0,0,0,0}
+    };
+
+    char (*temp[7])[4] = {I,O,T,S,Z,J,L};
+
+    for(int p = 0; p < 7; p++){
+        for(int i = 0; i < 4; i++){
+            for(int j = 0; j < 4; j++){
+                piezas[p].forma[i][j] = temp[p][i][j];
+            }
+        }
+    }
+}
+void mostrarPieza(Pieza &p){
+
+    for(int i = 0; i < 4; i++){
+        for(int j = 0; j < 4; j++){
+
+            if(p.forma[i][j] == 1)
+                cout << "# ";
+            else
+                cout << ". ";
+        }
+
+        cout << endl;
+    }
+}
+
+

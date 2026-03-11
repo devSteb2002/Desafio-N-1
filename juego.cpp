@@ -176,3 +176,74 @@ void dibujarTablero(void *tablero, TipoTablero tipotablero,
 }
 
 
+bool puedeColocarPieza(void* tablero,TipoTablero tipo,Pieza pieza,int fila,int columna,unsigned short alto,unsigned short ancho)
+{
+    for(int i = 0; i < TAM_PIEZA; i++)
+    {
+        for(int j = 0; j < TAM_PIEZA; j++)
+        {
+            if(pieza.forma[i][j] == 1)
+            {
+                int filaTablero = fila + i;
+                int colTablero = columna + j;
+
+                if(!posicionValida(filaTablero, colTablero, alto, ancho))
+                    return false;
+
+                if(hayColision(tablero, tipo, filaTablero, colTablero, ancho))
+                    return false;
+            }
+        }
+    }
+
+    return true;
+}
+void colocarPieza(void* tablero, TipoTablero tipo,Pieza pieza,int fila,int columna,unsigned short alto,unsigned short ancho)
+{
+
+    if(!puedeColocarPieza(tablero, tipo, pieza, fila, columna, alto, ancho))
+        return;
+
+    for(int i = 0; i < TAM_PIEZA; i++)
+    {
+        for(int j = 0; j < TAM_PIEZA; j++)
+        {
+            if(pieza.forma[i][j] == 1)
+            {
+                int filaTablero = fila + i;
+                int colTablero = columna + j;
+
+                switch(tipo)
+                {
+                case CHAR:
+                {
+                    char* t = static_cast<char*>(tablero);
+                    t[filaTablero] |= (1 << (ancho - 1 - colTablero));
+                    break;
+                }
+
+                case SHORT:
+                {
+                    short* t = static_cast<short*>(tablero);
+                    t[filaTablero] |= (1 << (ancho - 1 - colTablero));
+                    break;
+                }
+
+                case INT:
+                {
+                    int* t = static_cast<int*>(tablero);
+                    t[filaTablero] |= (1 << (ancho - 1 - colTablero));
+                    break;
+                }
+
+                case LONG64:
+                {
+                    long long* t = static_cast<long long*>(tablero);
+                    t[filaTablero] |= (1LL << (ancho - 1 - colTablero));
+                    break;
+                }
+                }
+            }
+        }
+    }
+}

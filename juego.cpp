@@ -1,6 +1,5 @@
 #include "juego.h"
 #include <iostream>
-#include "validaciones.h"
 
 using namespace std;
 
@@ -28,6 +27,39 @@ void  inicioJuego(unsigned short *alto, unsigned short *ancho){
       if (validacionNumeroIngresado(ancho)) break;
 
     } while (true);
+
+
+}
+
+void inicializarTableroEnceros(void *& tablero, TipoTablero&  tipotablero, const unsigned short* alto){
+
+
+    for (unsigned short i = 0; i < *alto; i++){
+        switch (tipotablero) {
+        case CHAR: {
+            char *filas = static_cast<char*>(tablero);
+            filas[i] = 0;
+            break;
+        }
+        case SHORT: {
+            short* filas = static_cast<short*>(tablero);
+            filas[i] = 0;
+            break;
+        }
+        case INT: {
+            int* filas = static_cast<int*>(tablero);
+            filas[i] = 0;
+            break;
+        }
+        case LONG64: {
+            long long* filas = static_cast<long long*>(tablero);
+            filas[i] = 0;
+            break;
+        }
+        default:
+            break;
+        }
+    }
 
 
 }

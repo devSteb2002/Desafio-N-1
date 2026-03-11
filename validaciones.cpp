@@ -77,7 +77,7 @@ void validarTipoTablero(void *& tablero, const unsigned short *ancho, const unsi
         tipotablero = INT;
     }
     else if (*ancho <= 64) {
-        tablero = new long long[12];
+        tablero = new long long[*alto];
         tipotablero = LONG64;
     }
 }

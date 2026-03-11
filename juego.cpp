@@ -139,5 +139,40 @@ void mostrarPieza(Pieza &p){
         cout << endl;
     }
 }
+void dibujarTablero(void *tablero, TipoTablero tipotablero,
+                    const unsigned short *alto,
+                    const unsigned short *ancho) {
+
+    for(unsigned short i = 0; i < *alto; i++) {
+
+        long long fila = 0;
+
+        // Extraer la fila según el tipo
+        switch(tipotablero) {
+        case CHAR:
+            fila = static_cast<char*>(tablero)[i];
+            break;
+        case SHORT:
+            fila = static_cast<short*>(tablero)[i];
+            break;
+        case INT:
+            fila = static_cast<int*>(tablero)[i];
+            break;
+        case LONG64:
+            fila = static_cast<long long*>(tablero)[i];
+            break;
+        }
+
+        // Imprimir cada bit de la fila
+        for(int j = *ancho - 1; j >= 0; j--) {
+            if ((fila >> j) & 1)
+                cout << "# ";
+            else
+                cout << ". ";
+        }
+
+        cout << endl;
+    }
+}
 
 

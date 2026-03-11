@@ -81,3 +81,50 @@ void validarTipoTablero(void *& tablero, const unsigned short *ancho, const unsi
         tipotablero = LONG64;
     }
 }
+
+bool posicionValida(int fila, int columna, unsigned short alto, unsigned short ancho)
+{
+    if (fila < 0 || fila >= alto)
+        return false;
+
+    if (columna < 0 || columna >= ancho)
+        return false;
+
+    return true;
+}
+
+bool hayColision(void* tablero,
+                 TipoTablero tipo,
+                 int fila,
+                 int columna,
+                 unsigned short ancho)
+{
+    switch(tipo)
+    {
+        case CHAR:
+        {
+            char* t = static_cast<char*>(tablero);
+            return (t[fila] & (1 << (ancho-1-columna)));
+        }
+
+        case SHORT:
+        {
+            short* t = static_cast<short*>(tablero);
+            return (t[fila] & (1 << (ancho-1-columna)));
+        }
+
+        case INT:
+        {
+            int* t = static_cast<int*>(tablero);
+            return (t[fila] & (1 << (ancho-1-columna)));
+        }
+
+        case LONG64:
+        {
+            long long* t = static_cast<long long*>(tablero);
+            return (t[fila] & (1LL << (ancho-1-columna)));
+        }
+    }
+
+    return false;
+}

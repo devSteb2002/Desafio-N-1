@@ -1,7 +1,6 @@
 #include "validaciones.h"
 #include <iostream>
 #include <limits>
-#include <cstdint>
 
 using namespace std;
 
@@ -43,10 +42,16 @@ bool  excedeLimite(const unsigned short* numero){
     return false;
 }
 
-bool validacionNumeroIngresado(const unsigned short *numero){
+bool validacionNumeroIngresado(const unsigned short *numero, bool esAlto){
+
+    if (esAlto){
         if (!esEntero()) return false;
-        if (!esMultDeOcho(numero)) return false;
-        if (excedeLimite(numero)) return false;
+
+        return true;
+    }
+
+    if (!esMultDeOcho(numero)) return false;
+    if (excedeLimite(numero)) return false;
 
         return true;
 }
@@ -55,10 +60,10 @@ void validarTipoTablero(void *& tablero, const unsigned short *ancho, const unsi
 
     if (tablero != nullptr){
         switch(tipotablero) {
-            case CHAR:    delete[] static_cast<char*>(tablero); break;
-            case SHORT:   delete[] static_cast<short*>(tablero); break;
-            case INT:     delete[] static_cast<int*>(tablero); break;
-            case LONG64:  delete[] static_cast<long long*>(tablero); break;
+            case CHAR_:    delete[] static_cast<char*>(tablero); break;
+            case SHORT_:   delete[] static_cast<short*>(tablero); break;
+            case INT_:     delete[] static_cast<int*>(tablero); break;
+            case LONG64_:  delete[] static_cast<long long*>(tablero); break;
         }
 
         tablero = nullptr;
@@ -66,65 +71,19 @@ void validarTipoTablero(void *& tablero, const unsigned short *ancho, const unsi
 
     if (*ancho == 8) {
         tablero = new char[*alto];
-        tipotablero = CHAR;
+        tipotablero = CHAR_;
     }
     else if (*ancho <= 16 ){
         tablero = new short[*alto];
-        tipotablero = SHORT;
+        tipotablero = SHORT_;
     }
     else if (*ancho <= 32) {
         tablero = new int[*alto];
-        tipotablero = INT;
+        tipotablero = INT_;
     }
     else if (*ancho <= 64) {
         tablero = new long long[*alto];
-        tipotablero = LONG64;
+        tipotablero = LONG64_;
     }
 }
 
-bool posicionValida(int fila, int columna, unsigned short alto, unsigned short ancho)
-{
-    if (fila < 0 || fila >= alto)
-        return false;
-
-    if (columna < 0 || columna >= ancho)
-        return false;
-
-    return true;
-}
-
-bool hayColision(void* tablero,
-                 TipoTablero tipo,
-                 int fila,
-                 int columna,
-                 unsigned short ancho)
-{
-    switch(tipo)
-    {
-        case CHAR:
-        {
-            char* t = static_cast<char*>(tablero);
-            return (t[fila] & (1 << (ancho-1-columna)));
-        }
-
-        case SHORT:
-        {
-            short* t = static_cast<short*>(tablero);
-            return (t[fila] & (1 << (ancho-1-columna)));
-        }
-
-        case INT:
-        {
-            int* t = static_cast<int*>(tablero);
-            return (t[fila] & (1 << (ancho-1-columna)));
-        }
-
-        case LONG64:
-        {
-            long long* t = static_cast<long long*>(tablero);
-            return (t[fila] & (1LL << (ancho-1-columna)));
-        }
-    }
-
-    return false;
-}

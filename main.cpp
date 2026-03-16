@@ -1,5 +1,7 @@
 #include <iostream>
+#include <windows.h>
 #include "juego.h"
+#include "tablero.h"
 
 using namespace std;
 
@@ -8,23 +10,37 @@ int main()
     //variables globales
     TipoTablero tipotablero;
 
+
+    bool juegoActivo = true;
     unsigned short alto;
     unsigned short ancho;
     void* tablero = nullptr; // sin tipo (para optimizar con el entero)
 
-    Pieza piezas[7];
 
     inicioJuego(&alto, &ancho);
     validarTipoTablero(tablero, &ancho, &alto , tipotablero);
     inicializarTableroEnceros(tablero, tipotablero, &alto);
 
-    cargarPiezas(piezas);
+    system("cls");
 
-    cout << "\nTABLERO INICIAL\n";
-    dibujarTablero(tablero, tipotablero, &alto, &ancho);
+    while (juegoActivo){
+        moverCursor(0,0);
+        dibujarTablero(&alto, tablero, tipotablero);
 
-    cout << "\nPieza de prueba:\n";
-    mostrarPieza(piezas[2]);
+
+
+
+        break;
+
+    }
+
+
+
+
+    //cout << "\nTABLERO INICIAL\n";
+   // dibujarTablero(tablero, tipotablero, &alto, &ancho);
+
+
 
     if(tablero == nullptr) {
         cout << "ERROR: tablero no inicializado!\n";
@@ -32,7 +48,7 @@ int main()
 
     //NOTA: verificacion de que si se guarden la cantidad de bits de acuerdo al dato
 
-    for (short i = 0; i < alto; i++) {
+   /* for (short i = 0; i < alto; i++) {
         switch(tipotablero) {
 
         case CHAR: {
@@ -54,20 +70,8 @@ int main()
         case LONG64:
             break;
         }
-   }
+   } */
 
-    // Intentar colocar pieza
-   // if(puedeColocarPieza(tablero, tipotablero, piezas[2], 2, 3, alto, ancho))
-    //{
-       // colocarPieza(tablero, tipotablero, piezas[2], 2, 3, alto, ancho);
-    //}
-    //else
-    //{
-        //cout << "No se puede colocar la pieza\n";
-    //}
-
-    cout << "\nTABLERO CON PIEZA\n";
-    dibujarTablero(tablero, tipotablero, &alto, &ancho);
 
     return 0;
 }

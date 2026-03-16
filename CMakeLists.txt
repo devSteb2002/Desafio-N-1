@@ -8,6 +8,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_executable(Desafio_1 main.cpp
     validaciones.h validaciones.cpp
     juego.h juego.cpp
+    tablero.h tablero.cpp
 )
 
 include(GNUInstallDirs)

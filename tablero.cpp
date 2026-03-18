@@ -148,3 +148,28 @@ void dibujarTablero(const unsigned short *alto, void *& tablero, TipoTablero&  t
 void generarPiezaAleatoria(const unsigned short *alto, void *& tablero){
 
 }
+const short* obtenerReferenciaPieza(int id) {
+ 
+    if (id < 0 || id >= 7) return piezas[0];
+    return piezas[id];
+}
+void caerPieza(int* y) {
+ 
+    if (y != nullptr) {
+        (*y)++;
+    }
+}
+void proyectarPieza(void* tablero, TipoTablero tipotablero, short const* pieza, int x, int y) {
+    
+    for (int i = 0; i < 4; i++) {
+    
+        if (y + i >= 0 && y + i < 20) { 
+            if (tipotablero == SHORT_) {
+                short* filas = static_cast<short*>(tablero);
+                
+                filas[y + i] |= (pieza[i] << x); 
+            }
+            
+        }
+    }
+}

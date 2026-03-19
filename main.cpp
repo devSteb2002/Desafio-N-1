@@ -1,32 +1,50 @@
 #include <iostream>
-#include "validaciones.h"
+#include <windows.h>
 #include "juego.h"
+#include "tablero.h"
 
 using namespace std;
 
-int main()
-{
+int main(){
     //variables globales
     TipoTablero tipotablero;
 
+
+    bool juegoActivo = true;
     unsigned short alto;
     unsigned short ancho;
     void* tablero = nullptr; // sin tipo (para optimizar con el entero)
 
-    Pieza piezas[7];
+
 
     inicioJuego(&alto, &ancho);
     validarTipoTablero(tablero, &ancho, &alto , tipotablero);
     inicializarTableroEnceros(tablero, tipotablero, &alto);
 
-    cargarPiezas(piezas);
+    system("cls");
 
-    cout << "\nTABLERO INICIAL\n";
-    dibujarTablero(tablero, tipotablero, &alto, &ancho);
+    while (juegoActivo){
+        moverCursor(0,0);
+        dibujarTablero(&alto, tablero, tipotablero);
 
-    cout << "\nPieza de prueba:\n";
-    mostrarPieza(piezas[2]);
+
+
+
+        break;
+
+    }
+
+
 
     if(tablero == nullptr) {
         cout << "ERROR: tablero no inicializado!\n";
     }
+
+
+
+
+
+
+
+    return 0;
+}

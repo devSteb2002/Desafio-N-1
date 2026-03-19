@@ -20,6 +20,7 @@ int main(){
     inicioJuego(&alto, &ancho);
     validarTipoTablero(tablero, &ancho, &alto , tipotablero);
     inicializarTableroEnceros(tablero, tipotablero, &alto);
+    generarPiezaAleatoria(&alto, tablero, tipotablero);
 
     system("cls");
 

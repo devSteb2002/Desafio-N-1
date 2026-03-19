@@ -4,42 +4,50 @@
 
 using namespace std;
 
+
 const short piezas[7][4] = {
     {
-        1,
-        1,    // figura palo
-        1,
-        1,
-    } ,
-    {
-        11,  // figura cuadrado
-        11
+        0b1,
+        0b1,    // Figura: Palo (I)
+        0b1,
+        0b1
     },
     {
-        111, // figura T
-        010,
-        010,
+        0b11,   // Figura: Cuadrado (O)
+        0b11,
+        0,
+        0
     },
     {
-        0111,
-        0100, // figura s
-        0100,
+        0b111,  // Figura: T
+        0b010,
+        0,
+        0
     },
     {
-        1110,
-        0010, // figura z
-        0010,
+        0b011,  // Figura: S
+        0b110,
+        0,
+        0
     },
     {
-        010,
-        010, // figura j
-        110
+        0b110,  // Figura: Z
+        0b011,
+        0,
+        0
     },
     {
-        010,
-        010, // figura l
-        011
+        0b010,  // Figura: J
+        0b010,
+        0b110,
+        0
     },
+    {
+        0b010,  // Figura: L
+        0b010,
+        0b011,
+        0
+    }
 };
 
 void moverCursor(const unsigned short y, const unsigned short  x){
@@ -145,6 +153,53 @@ void dibujarTablero(const unsigned short *alto, void *& tablero, TipoTablero&  t
     }
 }
 
-void generarPiezaAleatoria(const unsigned short *alto, void *& tablero){
+void generarPiezaAleatoria(const unsigned short *alto, void *& tablero, TipoTablero tipotablero) {
+    if (tablero == nullptr || alto == nullptr) return;
 
+    static std::random_device rd; 
+    static std::mt19937 gen(rd()); 
+    std::uniform_int_distribution<> dis(0, 6);
+
+    int indicePieza = dis(gen);
+    int desplazamiento = 0;
+
+    // Calculamos cuánto desplazar los bits según el ancho del tipo de dato
+    switch(tipotablero) {
+        case 0: desplazamiento = (8 - 4) / 2;  break; // char: 8 bits
+        case 1: desplazamiento = (16 - 4) / 2; break; // short: 16 bits
+        case 2: desplazamiento = (32 - 4) / 2; break; // int: 32 bits
+        case 3: desplazamiento = (64 - 4) / 2; break; // long long: 64 bits
+    }
+
+    switch(tipotablero) {
+        case 0: { 
+            char *filas = static_cast<char*>(tablero);
+            for (int i = 0; i < 4 && i < *alto; i++) {
+                // Desplazamos los bits de la pieza al centro antes del OR
+                filas[i] |= (char)(piezas[indicePieza][i] << desplazamiento);
+            }
+            break;
+        }
+        case 1: { 
+            short *filas = static_cast<short*>(tablero);
+            for (int i = 0; i < 4 && i < *alto; i++) {
+                filas[i] |= (short)(piezas[indicePieza][i] << desplazamiento);
+            }
+            break;
+        }
+        case 2: { 
+            int *filas = static_cast<int*>(tablero);
+            for (int i = 0; i < 4 && i < *alto; i++) {
+                filas[i] |= (int)(piezas[indicePieza][i] << desplazamiento);
+            }
+            break;
+        }
+        case 3: { 
+            long long *filas = static_cast<long long*>(tablero);
+            for (int i = 0; i < 4 && i < *alto; i++) {
+                filas[i] |= (long long)((unsigned long long)piezas[indicePieza][i] << desplazamiento);
+            }
+            break;
+        }
+    }
 }

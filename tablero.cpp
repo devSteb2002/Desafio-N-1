@@ -1,7 +1,7 @@
 #include "tablero.h"
 #include <iostream>
 #include <windows.h>
-
+#include "piezas.h"
 using namespace std;
 
 

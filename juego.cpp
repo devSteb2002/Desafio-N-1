@@ -1,5 +1,8 @@
 #include "juego.h"
 #include <iostream>
+#include "validaciones.h"
+#include <random>
+#include"piezas.h"
 
 using namespace std;
 

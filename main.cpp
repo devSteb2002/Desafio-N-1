@@ -2,7 +2,7 @@
 #include <windows.h>
 #include "juego.h"
 #include "tablero.h"
-#include "validaciones.h" 
+#include "validaciones.h"
 #include "piezas.h"
 
 using namespace std;
@@ -17,32 +17,40 @@ int main(){
     unsigned short ancho;
     void* tablero = nullptr; // sin tipo (para optimizar con el entero)
 
-
     int px, py, idPieza;
     char tecla;
-
-
 
     inicioJuego(&alto, &ancho);
     validarTipoTablero(tablero, &ancho, &alto , tipotablero);
     inicializarTableroEnceros(tablero, tipotablero, &alto);
-    generarPiezaAleatoria(&alto, tablero, tipotablero);
 
     system("cls");
     prepararNuevaPieza(px, py, idPieza, ancho);
-
-
-
 
     while (juegoActivo){
         moverCursor(0, 0);
         dibujarTablero(&alto, tablero, tipotablero, px, py, idPieza);
 
-        cout << "\n(A/D) Mover, (S) Bajar, (Q) Salir: ";
+        cout << endl;
+        cout << "Accion: [A]izq [D]der [S]bajar [W]rotar [Q]salir: ";
         cin >> tecla;
 
+        if (py == 0){
+            if (hayColision(tablero, tipotablero, px, py, obtenerDatosPieza(idPieza), &alto, &ancho)){
+                cout << "==================" << endl;
+                cout << " GAME OVER" << endl;
+                cout << "==================" << endl;
+                eliminarMemoria(tablero, tipotablero);
+                break;
+            }
+        }
+
         if (tecla == 'q' || tecla == 'Q') {
-            juegoActivo = false;
+            cout << "====================" << endl;
+            cout << " Gracias por jugar."   << endl;
+            cout << "====================" << endl;
+            eliminarMemoria(tablero, tipotablero);
+            break;
         } 
         else if (tecla == 'd' || tecla == 'D') {
             // A = IZQUIERDA (px - 1)
@@ -65,9 +73,10 @@ int main(){
                 prepararNuevaPieza(px, py, idPieza, ancho);
             }
         }
-
-
-
+        else if (tecla == 'W' || tecla == 'w'){
+            rotarPiezas(tablero, &alto, &ancho, tipotablero, idPieza, px, py);
+        }
+    }
 
     return 0;
 }

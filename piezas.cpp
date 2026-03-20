@@ -17,7 +17,7 @@ const short FIGURAS[7][4] = {
     {
         0b111,  // Figura: T
         0b010,
-        0,
+        0b010,
         0
     },
     {

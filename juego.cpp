@@ -37,7 +37,8 @@ void prepararNuevaPieza(int& px, int& py, int& tipoPieza, int anchoTablero) {
     static std::mt19937 gen(rd());
     std::uniform_int_distribution<> dis(0, 6);
 
-    tipoPieza = dis(gen); 
+    tipoPieza = dis(gen);
+    //tipoPieza = 0;
     py = 0;               
     px = (anchoTablero - 4) / 2; 
 }
@@ -65,7 +66,7 @@ void fijarPiezaEnTablero(void* tablero, TipoTablero tipo, int px, int py, int id
         
         unsigned long long filaDesplazada = (unsigned long long)(*(bitsPieza + i)) << px;
 
-       
+
         if (tipo == CHAR_) {
             *((char*)tablero + filaDestino) |= (char)filaDesplazada;
         } 
@@ -82,6 +83,39 @@ void fijarPiezaEnTablero(void* tablero, TipoTablero tipo, int px, int py, int id
 }
 
 
+void rotarPiezas(void*& tablero, const unsigned short *alto, const unsigned short *ancho, TipoTablero tipotablero, const int idPieza, int px, int py){    for (short i = 0; i < *alto; i++){
+
+    /*    switch (tipotablero) {
+        case CHAR_: {
+            char *filas = static_cast<char*>(tablero);
+
+            for (short f = sizeof(char) * 8; f >=0; f-- ){
+                cout << filas[py] >> f;
+
+            }
+
+            if (idPieza == 0){
+                if (px >= 3){
+                    cout << py << "  " << px << endl;
+                    if (((filas[py + 1] >> px) & 1) == 1){
+
+                        cout << "hoa" << endl;
+                        if ((filas[py] & ((1 << 3) - 1)) == 0){ // rotar horizontal
+                            cout << "aqui";
 
 
+                        }
+                    }
+                }
+            }
+
+            break;
+        }
+        default:
+            break;
+        }
+    } */
+    }
+
+}
 

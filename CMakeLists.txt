@@ -9,6 +9,8 @@ add_executable(Desafio_1 main.cpp
     validaciones.h validaciones.cpp
     juego.h juego.cpp
     tablero.h tablero.cpp
+    piezas.h piezas.cpp
+
 )
 
 include(GNUInstallDirs)

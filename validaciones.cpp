@@ -110,8 +110,10 @@ bool esPosicionValida(int px, int py, int anchoPieza, int altoPieza, TipoTablero
 
 
 bool hayColision(void* tablero, TipoTablero tipo, int px, int py, const short* piezaActual, const unsigned short* altoTablero, const unsigned short* anchoTablero) {
+
     for (int i = 0; i < 4; i++) {
-        unsigned short filaPieza = piezaActual[i]; 
+        unsigned short filaPieza = piezaActual[i];
+
         if (filaPieza == 0) continue; 
 
         int filaDestino = py + i;
@@ -138,4 +140,18 @@ bool hayColision(void* tablero, TipoTablero tipo, int px, int py, const short* p
         }
     }
     return false;
+}
+
+
+void eliminarMemoria(void *& tablero, TipoTablero&  tipotablero){
+    if (tablero != nullptr){
+        switch(tipotablero) {
+        case CHAR_:    delete[] static_cast<char*>(tablero); break;
+        case SHORT_:   delete[] static_cast<short*>(tablero); break;
+        case INT_:     delete[] static_cast<int*>(tablero); break;
+        case LONG64_:  delete[] static_cast<long long*>(tablero); break;
+        }
+
+        tablero = nullptr;
+    }
 }

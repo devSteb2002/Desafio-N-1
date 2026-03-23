@@ -98,7 +98,4 @@ void dibujarTablero(const unsigned short *alto, void * tablero, TipoTablero tipo
         }
         cout << endl;
     }
-
-
-
 }

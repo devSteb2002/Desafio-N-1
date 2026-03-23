@@ -63,9 +63,7 @@ void fijarPiezaEnTablero(void* tablero, TipoTablero tipo, int px, int py, int id
         
         int filaDestino = py + i;
         
-        
         unsigned long long filaDesplazada = (unsigned long long)(*(bitsPieza + i)) << px;
-
 
         if (tipo == CHAR_) {
             *((char*)tablero + filaDestino) |= (char)filaDesplazada;
